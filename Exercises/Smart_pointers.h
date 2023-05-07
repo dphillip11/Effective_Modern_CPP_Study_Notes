@@ -79,12 +79,15 @@ public:
 		delete sharedPtr.get(); // undefined behavior*/
 
 		//both shared and unique pointers may be given custom deleter functions but their implementation is different, 
-		//the unique ptr carries its deleter, the shared pointer carries a reference to its reference block where the deleter resides
-
+		//the unique ptr carries its deleter, the shared pointer carries a reference to its control block where the deleter resides
 		bool deleter1Called = false;
 		bool deleter2Called = false;
-		auto deleterFunction1 = [&deleter1Called](int*) {deleter1Called = true;};
-		auto deleterFunction2 = [&deleter2Called](int*) {Log("2 called"); deleter2Called = true;};
+		//we will add some capture data to bloat the uptr size
+		std::vector<int> bloat = { 1,2,3,4,5,6,7,8,9,10 };
+		//pass the bloat by value to increase bloat
+		auto deleterFunction1 = [&deleter1Called, bloat](int*) {deleter1Called = true;};
+		//the size of the sptr will be unaffected as the capture data will be stored in a referenced control block
+		auto deleterFunction2 = [&deleter2Called, bloat](int*) {deleter2Called = true;};
 
 		//this is the syntax for adding a deleter to a unique ptr, notice the type contains the deleter and the function is passed as an argument
 		std::unique_ptr<int, decltype(deleterFunction1)> uptr(new int{ 1 }, deleterFunction1);
@@ -92,15 +95,34 @@ public:
 		//a shared ptr type does not contain the deleter, 
 		std::shared_ptr<int> sptr(new int{ 1 }, deleterFunction2);
 
-		std::cout << "uptr size: " << sizeof(uptr) << "\n" << "sptr size: " << sizeof(sptr);
-		//assert(sizeof(uptr) > sizeof(sptr));
+		auto sptr2 = sptr;
 
+		//the capture data bloats the uptr but not the sptr
+		assert(sizeof(uptr) > sizeof(sptr));
+
+		//destructors call their respective deleters
 		uptr.reset();
 		assert(deleter1Called);
 
+		//shared deleter is only called when reference count is zero
 		sptr.reset();
+		assert(!deleter2Called);
+		sptr2.reset();
 		assert(deleter2Called);
 
+		//reset deleters
+		deleter1Called = false;
+		deleter2Called = false;
+
+		//as shared pointers have the same type and size regardless of their deleters, they may be stored in containers and each may reference a unique deleter
+		std::vector<std::shared_ptr<int>> sptrs;
+		sptrs.push_back(std::shared_ptr<int>{new int(5), deleterFunction1});
+		sptrs.push_back(std::shared_ptr<int>{new int(7), deleterFunction2});
+
+		//now both deleters will be called when the vector is cleared
+		sptrs.clear();
+		assert(deleter1Called);
+		assert(deleter2Called);
 
 
 
