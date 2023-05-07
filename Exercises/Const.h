@@ -1,4 +1,4 @@
-#pragma once
+
 # include "Exercise.h"
 
 class Const : public Exercise
@@ -19,11 +19,14 @@ public:
 	private:
 		int _ID{ 0 };
 		float _weight{ 0.0f };
+		//string view allows strings to behave as constexpr
+		std::string_view _name{ "Noname" };
 	public:
-		constexpr CompileTimeObject(int ID, float weight) noexcept
-			: _ID(ID), _weight(weight) {}
+		constexpr CompileTimeObject(int ID, float weight, auto name) noexcept
+			: _ID(ID), _weight(weight), _name(name) {}
 		constexpr auto GetID() const noexcept { return _ID; }
 		constexpr auto GetWeight() const noexcept { return _weight; }
+		constexpr auto GetName() const noexcept { return _name; }
 	};
 
 	// constexpr functions cannot use I/O statements as they will not compile
@@ -48,10 +51,24 @@ public:
 		container.insert(it, insertVal);
 	}
 
+	//class with const member function
+	class MyClass {
+	public:
+		//modifies the state
+		void setValue(int value) { m_value = value; }
+		//doesn't modify state of object, const safe
+		int getValue() const { return m_value; } // const member function
+	private:
+		int m_value{ 0 };
+	};
+
 	void Test()
 	{
+		constexpr auto string = "new_name";
+
 		// this object can be constructed at compile time
-		constexpr CompileTimeObject CTO(5, 8.8f);
+		constexpr CompileTimeObject CTO(5, 8.8f, string);
+		assert(CTO.GetName() == "new_name");
 		// furthermore we can allocate fixed arrays based on its constexpr functions at compile time
 		int array[CTO.GetID()];
 
@@ -72,5 +89,9 @@ public:
 		/*for (auto it = std::cbegin(values); it != std::cend(values); ++it) {
 			(*it)++;
 		}*/
+
+		const MyClass obj;
+		//obj.setValue(42); // compile error: can't modify a const object
+		int value = obj.getValue(); // okay: const member function can be called on a const object
 	}
 };

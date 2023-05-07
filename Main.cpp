@@ -7,6 +7,8 @@
 #include "Aliases.h"
 #include "Inheritance.h"
 #include "Overloads.h"
+#include "Mutexes.h"
+#include "Smart_pointers.h"
 
 int main()
 {
@@ -21,6 +23,8 @@ int main()
 	Aliases a2;
 	Inheritance i;
 	Overloads o;
+	Mutexes M;
+	Smart_pointers sp;
 
 	//calls static function
 	Exercise::RunExercises();

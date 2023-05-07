@@ -23,12 +23,12 @@ class Inheritance : public Exercise
 		(*map)[FUNCTION::BASE_DESTRUCTOR] = false;
 		(*map)[FUNCTION::DERIVED_DESTRUCTOR] = false;
 		return map;
-	}	
+	}
 
 	//A and B correctly delegate function calls based on the instantiated class due to virtual declarations and override declaration
 	class A {
 	public:
-		mapEB _map;
+		mapEB& _map;
 		A(mapEB& map) : _map(map) {};
 		//this is the same name as function in B, but accepts const int, a possible mistake
 		virtual void f() {
@@ -44,7 +44,7 @@ class Inheritance : public Exercise
 	public:
 		B(mapEB& map) : A(map) {};
 
-		void f() override{
+		void f() override {
 			(*_map)[FUNCTION::DERIVED_FUNCTION] = true;
 		}
 
@@ -56,9 +56,9 @@ class Inheritance : public Exercise
 	//C and D are more haphazard and can produce unexpected behaviour
 	class C {
 	public:
-		mapEB _map;
+		mapEB& _map;
 
-		C(mapEB map) : _map(map) {};
+		C(mapEB& map) : _map(map) {};
 
 		~C() {
 			(*_map)[FUNCTION::BASE_DESTRUCTOR] = true;
@@ -72,7 +72,7 @@ class Inheritance : public Exercise
 	class D : public C {
 	public:
 
-		D(mapEB map) : C(map) {};
+		D(mapEB& map) : C(map) {};
 
 		~D() {
 			(*_map)[FUNCTION::DERIVED_DESTRUCTOR] = true;
@@ -125,7 +125,7 @@ public:
 		}
 
 		map = Inheritance::getEmptyMap();
-			
+
 		//scoped declaration to invoke destructor
 		if (true)
 		{
