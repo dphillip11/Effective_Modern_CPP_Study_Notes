@@ -25,7 +25,7 @@ namespace Item21 {
 	};
 
 	//in .cpp implementation file
-	//inlcude headers
+	//include headers
 
 	struct PIMPL_class::impl {
 		//data members that reuqire additional headers

@@ -9,6 +9,7 @@
 #include "Overloads.h"
 #include "Mutexes.h"
 #include "Smart_pointers.h"
+#include "Constructors.h"
 
 int main()
 {
@@ -25,6 +26,7 @@ int main()
 	Overloads o;
 	Mutexes M;
 	Smart_pointers sp;
+	Constructors co;
 
 	//calls static function
 	Exercise::RunExercises();
