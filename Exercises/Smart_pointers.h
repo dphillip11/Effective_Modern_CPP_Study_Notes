@@ -124,6 +124,30 @@ public:
 		assert(deleter1Called);
 		assert(deleter2Called);
 
+		auto sptr3 = std::make_shared<int>(2);
+		//we can create a weak ptr that references a shared resource
+		std::weak_ptr<int> wptr1 = sptr3;
+		//it does not affect the count
+		assert(sptr3.use_count() == 1);
+		//we can convert it to a shared ptr when we choose
+		auto sptr4 = wptr1.lock();
+		//thus increasing the count
+		assert(sptr3.use_count() == 2);
+		//if the resource is deleted, we can check via the weak ptr .expired() functions
+		assert(!wptr1.expired());
+		sptr3.reset();
+		sptr4.reset();
+		assert(wptr1.expired());
+		//if we lock a void pointer it will return a nullptr
+		auto sptr5 = wptr1.lock();
+		assert(sptr5 == nullptr);
+		//alternatively we can throw a bad_weak_ptr error by using the shared pointer constructor
+		//std::shared_ptr<int> sptr6(wptr1);
+
+		//the weak count based on the number of weak pointer references controls the lifetime of the contriol block
+		//this way we can pass references to shared resources and check their validity without undefined behaviour
+		//as such weak pointers cannot be dereferenced directly
+		//*wptr1
 
 
 
