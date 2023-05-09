@@ -1,5 +1,3 @@
-#pragma once
-# include "Exercise.h"
 
 class Aliases : public Exercise
 {

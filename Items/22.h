@@ -1,4 +1,3 @@
-#include <Exercise.h>
 // Item 22: When using the Pimpl Idiom, define special member functions in the implementation file.
 //pimpl(pointer to implementation) idiom can reduce compile time by reducing the need to compile dependencies in the header file.
 

@@ -1,6 +1,3 @@
-#pragma once
-# include "Exercise.h"
-
 
 class Smart_pointers : public Exercise
 {

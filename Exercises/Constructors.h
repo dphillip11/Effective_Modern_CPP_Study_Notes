@@ -1,5 +1,3 @@
-# include "Exercise.h"
-
 
 class Constructors : public Exercise
 {

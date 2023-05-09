@@ -1,6 +1,3 @@
-#pragma once
-# include "Exercise.h"
-
 
 class Inheritance : public Exercise
 {

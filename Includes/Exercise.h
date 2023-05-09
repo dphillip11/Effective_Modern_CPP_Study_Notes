@@ -1,16 +1,4 @@
-#pragma once
-#include "Utils.h"
-#include <string>
-#include <cassert>
-#include <vector>
-#include <format>
-#include <array>
-#include <functional>
-#include <map>
-
-
-//Macro for saving us from writing Utils:: alot
-#define Log(x) Utils::Log(x);
+#include "pch.h"
 
 class Exercise {
 
@@ -18,7 +6,7 @@ private:
 	static std::vector<Exercise*> exercises;
 
 public:
-	
+
 	virtual void Run() = 0;
 	virtual void Test() = 0;
 

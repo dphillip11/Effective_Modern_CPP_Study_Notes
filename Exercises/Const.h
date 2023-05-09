@@ -1,6 +1,4 @@
 
-# include "Exercise.h"
-
 class Const : public Exercise
 {
 public:

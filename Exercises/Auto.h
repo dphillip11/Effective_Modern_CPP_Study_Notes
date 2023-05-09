@@ -1,5 +1,4 @@
-#pragma once
-# include "Exercise.h"
+
 
 class boolContainer {
 private:
@@ -16,12 +15,12 @@ public:
 	}
 };
 
-class Auto: public Exercise 
+class Auto : public Exercise
 {
 public:
 	void Run()
 	{
-		
+
 	}
 
 	//returns a lambda function for comparing two variables using <
@@ -53,7 +52,7 @@ public:
 		assert(function(3.3, 3.1) == false);
 
 		//function2 requires the types to be declared
-		auto function2 = GetFunction2<int,int>();
+		auto function2 = GetFunction2<int, int>();
 
 		//this works for ints but fails for floats
 		//assert(function2(9, 6) == false);
@@ -77,7 +76,7 @@ public:
 		auto response1 = bc.GetBools()[index];
 		//using the response may cause undefined behaviour as the type is not the expected one
 		  //bc.TestBool(response1, index);
-		  
+
 		//we can explicitly show we intend to recieve a bool using the static cast
 		auto response2 = static_cast<bool>(bc.GetBools()[index]);
 		//we can then use the bool value
@@ -86,7 +85,7 @@ public:
 		bool response3 = static_cast<bool>(bc.GetBools()[index]);
 		//we can then use the bool value
 		bc.TestBool(response3, index);
-		
+
 		//this highlights a problem caused by incorrect implicit declaration
 		std::unordered_map<std::string, int> m{ {"frst", 1}, {"secd", 2}, {"thrd", 3}, {"frth", 4}, {"ffth", 5} };
 
@@ -118,6 +117,6 @@ public:
 
 
 
-		
+
 	}
 };

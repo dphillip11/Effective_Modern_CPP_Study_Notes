@@ -1,6 +1,3 @@
-#pragma once
-#include "Exercise.h"
-
 
 class Templates : public Exercise
 {
@@ -93,7 +90,7 @@ public:
 		assert(output == "int");
 
 		//check that braced auto returns initializer list
-		auto braced_integer = {1};
+		auto braced_integer = { 1 };
 		checkType(braced_integer, output);
 		assert(output == "class std::initializer_list<int>");
 
@@ -173,7 +170,7 @@ public:
 		//we can't modify h, it is a compile time error
 		//h = 1;
 		//TD<decltype(h)> hType;
-		
+
 		//as const references the memory address is preserved
 		assert(&h == &f_ref);
 

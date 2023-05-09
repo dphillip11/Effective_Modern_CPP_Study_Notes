@@ -1,7 +1,5 @@
-#pragma once
-# include "Exercise.h"
 
-class Vectors: public Exercise 
+class Vectors : public Exercise
 {
 public:
 	void Run()

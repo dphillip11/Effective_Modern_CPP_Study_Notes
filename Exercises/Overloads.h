@@ -1,6 +1,3 @@
-#pragma once
-# include "Exercise.h"
-
 
 class Overloads : public Exercise
 {

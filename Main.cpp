@@ -1,3 +1,11 @@
+// standard library includes, pre-compiled-header
+#include "pch.h"
+// log statements
+#include "Utils.h"
+#define Log(x) Utils::Log(x)
+// exercise base class
+#include "Exercise.h"
+// exercises
 #include "Templates.h"
 #include "Const.h"
 #include "Vectors.h"
@@ -10,11 +18,11 @@
 #include "Mutexes.h"
 #include "Smart_pointers.h"
 #include "Constructors.h"
+#include "UniversalReferences.h"
 
 int main()
 {
 	//instantiates exercises, the exercise constructor adds them to the static Exercise::exercises vector
-	//this is similar to the observer pattern but with automatic subscription
 	Templates t;
 	Const c;
 	Vectors v;
@@ -27,6 +35,7 @@ int main()
 	Mutexes M;
 	Smart_pointers sp;
 	Constructors co;
+	UniversalRefVsRvalueRef UR;
 
 	//calls static function
 	Exercise::RunExercises();

@@ -1,7 +1,4 @@
-#pragma once
-# include "Exercise.h"
-
-class Lambdas: public Exercise 
+class Lambdas : public Exercise
 {
 public:
 	void Run()
@@ -11,7 +8,7 @@ public:
 
 		auto result = sum(9.0, 11.3);
 
-	}	
+	}
 
 	void Test()
 	{
