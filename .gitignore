@@ -10,3 +10,7 @@ CPPExercises.vcxproj
 CPPExercises.sln
 
 x64/
+
+Includes/pch.h
+
+Includes/pch.cpp
